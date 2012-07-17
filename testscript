@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo test.hi: hi there
+echo test.now: `date +%s`
+
