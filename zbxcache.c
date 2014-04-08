@@ -55,16 +55,17 @@ void run_script(char *script, int maxage)
 		size_t buflen;
 		int len;
 		line = (char *) malloc(MAXBUF);
+		buflen = MAXBUF;
 		len = getline(&line, &buflen, output);
 		if (len < 1) {
 			continue;
 		}
 		key = strtok(line, ": ");
 		val = trim(strtok(NULL, "\n"));
-		TRACE("TRACE: Caching %s=%s\n", key, val);
 		ret = memcached_set(st, key, strlen(key), val, strlen(val), maxage, 0);
-
+		TRACE("memcached_set(%s, %s) == %i\n", key, val, ret);
 		free(line);
+		line = NULL;
 	}
 	pclose(output);
 }
